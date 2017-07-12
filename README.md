@@ -1,20 +1,11 @@
-# Dns::CatalogZone
-[![Build Status](https://travis-ci.org/mimuret/dns-catalog_zone.svg?branch=master)](https://travis-ci.org/mimuret/dns-catalog_zone)
-[![Coverage Status](https://coveralls.io/repos/github/mimuret/dns-catalog_zone/badge.svg?branch=master)](https://coveralls.io/github/mimuret/dns-catalog_zone?branch=master)
-
+# Dns::CatalogZone::Daemon
 PoC of Catlog zone (draft-muks-dnsop-dns-catalog-zones)
-[README in Japanese](https://github.com/mimuret/dns-catalog_zone/blob/master/README.jp.md)  
-
-## supported name server softwares
-* NSD4 (default)
-* Knot dns
-* YADIFA
 
 ## Installation
 
 ```bash
-$ git clone https://github.com/mimuret/dns-catalog_zone
-$ cd dns-catalog_zone
+$ git clone https://github.com/mimuret/dns-catalog_zone-daemon
+$ cd dns-catalog_zone-daemon
 $ bundle install --path=vendor/bundle
 ```
 
@@ -33,79 +24,11 @@ CatalogZone below
 ```ruby
 setting("catlog.example.jp") do |s|
 	s.software="nsd"
-	s.source="file"
 	s.zonename="catlog.example.jp"
-	s.zonefile="/etc/nsd/catlog.example.jp.zone"
+	s.source="axfr"
+	s.server="ns.example.jp"
 end
 ````
-
-+ make name server config
-
-config output to stdout
-```bash
-$ bundle exec catz make
-```
-
-
-## Settings attribute
-| name | value | default | description |
-|:-----------|------------|:------------|:------------|
-|zonename|string(domain name)|catlog.example| catlog zone domain name |
-|software|string|nsd|software module name|
-|source|string|file|source module name|
-|output|string|stdout|output module name|
-
-### source modules
-#### file module
-| name | value | required |
-|:-----------|:------------|:------------|
-|source|file|true|
-|zonefile|path|true|
-
-#### axfr module
-| name | value | default |required |
-|:-----------|:------------|:------------|:------------|
-|source|axfr||true|
-|server|ip or hostname||true|
-|port|int|53|false|
-|tsig|string||false|
-|src_address|ip||false|
-|timeout|int|30|false|
-
-### software modules
-#### nsd module
-| name | value | required |
-|:-----------|:------------|:------------|
-|software|nsd||
-
-#### knot module
-| name | value | required |
-|:-----------|:------------|:------------|
-|software|knot||
-
-#### yadifa module
-| name | value | required |
-|:-----------|:------------|:------------|
-|software|yadifa||
-
-### output modules
-#### stdout module
-| name | value | required |
-|:-----------|:------------|:------------|
-|output|stdout||
-
-#### file module
-| name | value | required |
-|:-----------|:------------|:------------|
-|output|file||
-|output_path|path|true|
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/mimuret/dns-catalog_zone.
-
-OR make Dns::CatalogZone::Provider::(Software) gem
-
 
 ## License
 
